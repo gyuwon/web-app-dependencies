@@ -24,4 +24,6 @@ public sealed record TodoItem(Guid Id, string Text, bool IsDone)
         AssertThatTextIsNotEmpty(command.Text);
         return this with { Text = command.Text };
     }
+
+    internal TodoItem MarkAsDone() => this with { IsDone = true };
 }
