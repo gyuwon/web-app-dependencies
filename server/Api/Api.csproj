@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\InMemory\InMemory.csproj" />
   </ItemGroup>
 
 </Project>
