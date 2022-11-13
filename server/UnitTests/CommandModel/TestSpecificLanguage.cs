@@ -13,4 +13,12 @@ internal static class TestSpecificLanguage
         AddTodoItem command = new AddTodoItem(text);
         return executor.Execute(id, command);
     }
+
+    public static Task MarkAsDone(
+        this ITodoItemRepository repository,
+        Guid id)
+    {
+        MarkAsDoneCommandExecutor executor = new(repository);
+        return executor.Execute(id, new MarkAsDone());
+    }
 }

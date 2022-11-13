@@ -26,4 +26,6 @@ public sealed record TodoItem(Guid Id, string Text, bool IsDone)
     }
 
     internal TodoItem MarkAsDone() => this with { IsDone = true };
+
+    internal TodoItem MarkAsUndone() => this with { IsDone = false };
 }
