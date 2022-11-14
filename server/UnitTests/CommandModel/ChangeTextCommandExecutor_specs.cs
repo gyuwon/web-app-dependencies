@@ -59,4 +59,21 @@ public class ChangeTextCommandExecutor_specs
 
         await action.Should().ThrowAsync<InvariantViolationException>();
     }
+
+    [Theory, AutoTodosData]
+    public async Task Sut_fails_if_todo_item_is_done(
+        [Frozen(by: Matching.ImplementedInterfaces)]
+            InMemoryTodoItemRepository repository,
+        Guid id,
+        string text,
+        ChangeTextCommandExecutor sut,
+        ChangeText command)
+    {
+        await repository.AddTodoItem(id, text);
+        await repository.MarkAsDone(id);
+
+        Func<Task> action = () => sut.Execute(id, command);
+
+        await action.Should().ThrowAsync<InvariantViolationException>();
+    }
 }
