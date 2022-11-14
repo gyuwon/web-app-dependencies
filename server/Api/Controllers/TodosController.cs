@@ -58,4 +58,23 @@ public class TodosController : Controller
         await executor.Execute(id, command);
         return Ok();
     }
+
+    [HttpPost("{id}/mark-as-undone")]
+    public async Task<IActionResult> MarkAsUndone(
+        [FromServices] ITodoItemReader reader,
+        [FromServices] MarkAsUndoneCommandExecutor executor,
+        Guid id,
+        [FromBody] MarkAsUndone command)
+    {
+        TodoItemView? item = await reader.FindItem(id);
+        if (item?.IsDone == false)
+        {
+            string code = "InvalidCommand";
+            string message = "The item is not complete.";
+            return BadRequest(new ServiceError(code, message));
+        }
+
+        await executor.Execute(id, command);
+        return Ok();
+    }
 }

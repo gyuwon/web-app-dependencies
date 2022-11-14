@@ -13,6 +13,7 @@ services.AddSingleton<ITodoItemReader>(repository);
 services.AddSingleton<AddTodoItemCommandExecutor>();
 services.AddSingleton<ChangeTextCommandExecutor>();
 services.AddSingleton<MarkAsDoneCommandExecutor>();
+services.AddSingleton<MarkAsUndoneCommandExecutor>();
 
 services.AddControllers(c =>
 {
