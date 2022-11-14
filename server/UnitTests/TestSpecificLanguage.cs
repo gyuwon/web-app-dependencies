@@ -2,6 +2,7 @@ using api;
 using CommandModel;
 using Commands;
 using Foundation;
+using QueryModel;
 
 internal static class TestSpecificLanguage
 {
@@ -32,5 +33,22 @@ internal static class TestSpecificLanguage
         AddTodoItem body = new(text);
         HttpResponseMessage response = await client.PostAsJsonAsync(path, body);
         return (await response.Content.ReadFromJsonAsync<ReferenceCarrier>())!;
+    }
+
+    public static async Task<TodoItemView?> FindTodoItem(
+        this TodosServer server,
+        Guid id)
+    {
+        using HttpClient client = server.CreateClient();
+        string path = $"/api/todos/{id}";
+        HttpResponseMessage response = await client.GetAsync(path);
+        return await response.Content.ReadFromJsonAsync<TodoItemView>();
+    }
+
+    public static async Task<TodoItemView> GetTodoItem(
+        this TodosServer server,
+        Guid id)
+    {
+        return (await server.FindTodoItem(id))!;
     }
 }

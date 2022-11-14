@@ -31,4 +31,14 @@ public class TodosController : Controller
             null => NotFound(),
         };
     }
+
+    [HttpPost("{id}/change-text")]
+    public Task ChangeText(
+        [FromServices] ITodoItemRepository repository,
+        Guid id,
+        [FromBody] ChangeText command)
+    {
+        ChangeTextCommandExecutor executor = new(repository);
+        return executor.Execute(id, command);
+    }
 }

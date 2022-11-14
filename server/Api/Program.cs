@@ -1,3 +1,4 @@
+using Api.Filters;
 using CommandModel;
 using InMemory;
 using QueryModel;
@@ -10,7 +11,11 @@ InMemoryTodoItemRepository repository = new();
 services.AddSingleton<ITodoItemRepository>(repository);
 services.AddSingleton<ITodoItemReader>(repository);
 
-services.AddControllers();
+services.AddControllers(c =>
+{
+    c.Filters.Add<EntityNotFoundExceptionFilter>();
+    c.Filters.Add<InvariantViolationExceptionFilter>();
+});
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
