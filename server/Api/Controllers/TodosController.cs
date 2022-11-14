@@ -9,6 +9,13 @@ namespace Api.Controllers;
 [Route("/api/todos")]
 public class TodosController : Controller
 {
+    [HttpGet]
+    public async Task<ArrayCarrier<TodoItemView>> GetAllItems(
+        [FromServices] ITodoItemReader reader)
+    {
+        return ArrayCarrier.Create(await reader.GetAllItems());
+    }
+
     [HttpPost("add-todo-item")]
     public async Task<ReferenceCarrier> AddTodoItem(
         [FromServices] AddTodoItemCommandExecutor executor,
