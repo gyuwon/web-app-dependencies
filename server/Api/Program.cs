@@ -10,6 +10,9 @@ IServiceCollection services = builder.Services;
 InMemoryTodoItemRepository repository = new();
 services.AddSingleton<ITodoItemRepository>(repository);
 services.AddSingleton<ITodoItemReader>(repository);
+services.AddSingleton<AddTodoItemCommandExecutor>();
+services.AddSingleton<ChangeTextCommandExecutor>();
+services.AddSingleton<MarkAsDoneCommandExecutor>();
 
 services.AddControllers(c =>
 {

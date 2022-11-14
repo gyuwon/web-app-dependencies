@@ -51,4 +51,14 @@ internal static class TestSpecificLanguage
     {
         return (await server.FindTodoItem(id))!;
     }
+
+    public static async Task<HttpResponseMessage> MarkAsDone(
+        this TodosServer server,
+        Guid id)
+    {
+        using HttpClient client = server.CreateClient();
+        string path = $"/api/todos/{id}/mark-as-done";
+        MarkAsDone command = new();
+        return await client.PostAsJsonAsync(path, command);
+    }
 }

@@ -11,10 +11,9 @@ public class TodosController : Controller
 {
     [HttpPost("add-todo-item")]
     public async Task<ReferenceCarrier> AddTodoItem(
-        [FromServices] ITodoItemRepository repository,
+        [FromServices] AddTodoItemCommandExecutor executor,
         [FromBody] AddTodoItem command)
     {
-        AddTodoItemCommandExecutor executor = new(repository);
         Guid id = Guid.NewGuid();
         await executor.Execute(id, command);
         return new ReferenceCarrier(id);
@@ -34,11 +33,29 @@ public class TodosController : Controller
 
     [HttpPost("{id}/change-text")]
     public Task ChangeText(
-        [FromServices] ITodoItemRepository repository,
+        [FromServices] ChangeTextCommandExecutor executor,
         Guid id,
         [FromBody] ChangeText command)
     {
-        ChangeTextCommandExecutor executor = new(repository);
         return executor.Execute(id, command);
+    }
+
+    [HttpPost("{id}/mark-as-done")]
+    public async Task<IActionResult> MarkAsDone(
+        [FromServices] ITodoItemReader reader,
+        [FromServices] MarkAsDoneCommandExecutor executor,
+        Guid id,
+        [FromBody] MarkAsDone command)
+    {
+        TodoItemView? item = await reader.FindItem(id);
+        if (item?.IsDone == true)
+        {
+            string code = "InvalidCommand";
+            string message = "The item has already been done.";
+            return BadRequest(new ServiceError(code, message));
+        }
+
+        await executor.Execute(id, command);
+        return Ok();
     }
 }
