@@ -15,6 +15,7 @@ services.AddSingleton<ChangeTextCommandExecutor>();
 services.AddSingleton<MarkAsDoneCommandExecutor>();
 services.AddSingleton<MarkAsUndoneCommandExecutor>();
 
+services.AddCors();
 services.AddControllers(c =>
 {
     c.Filters.Add<EntityNotFoundExceptionFilter>();
@@ -33,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.MapControllers();
 app.Run();
 
