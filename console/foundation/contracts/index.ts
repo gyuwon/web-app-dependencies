@@ -8,6 +8,14 @@ export class ServiceError {
   }
 };
 
+export class ServiceErrorCarrier {
+  error: ServiceError;
+
+  constructor(error: ServiceError) {
+    this.error = error;
+  }
+};
+
 export class ArrayCarrier<T> {
   items: T[];
   

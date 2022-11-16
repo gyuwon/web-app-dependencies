@@ -1,4 +1,4 @@
-import { ArrayCarrier, ServiceError } from "foundation.contracts";
+import { ServiceErrorCarrier } from "foundation.contracts";
 
 export class TodoItem {
   id: string;
@@ -13,5 +13,5 @@ export class TodoItem {
 }
 
 export interface ITodoItemReader {
-  getAllItems(): Promise<ArrayCarrier<TodoItem> | ServiceError>
+  getAllItems(): Promise<TodoItem[] | ServiceErrorCarrier>
 };

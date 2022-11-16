@@ -11,7 +11,8 @@ public sealed class EntityNotFoundExceptionFilter : IExceptionFilter
     {
         if (context.Exception is EntityNotFoundException exception)
         {
-            context.Result = new NotFoundObjectResult(exception.Error);
+            ServiceErrorCarrier error = new(exception.Error);
+            context.Result = new NotFoundObjectResult(error);
             context.ExceptionHandled = true;
         }
     }

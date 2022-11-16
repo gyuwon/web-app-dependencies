@@ -1,4 +1,5 @@
 using CommandModel;
+using Foundation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -10,7 +11,8 @@ public sealed class InvariantViolationExceptionFilter : IExceptionFilter
     {
         if (context.Exception is InvariantViolationException exception)
         {
-            context.Result = new BadRequestObjectResult(exception.Error);
+            ServiceErrorCarrier error = new(exception.Error);
+            context.Result = new BadRequestObjectResult(error);
             context.ExceptionHandled = true;
         }
     }
