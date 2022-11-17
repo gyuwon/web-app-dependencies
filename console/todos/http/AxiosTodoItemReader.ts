@@ -1,5 +1,5 @@
 import { Axios } from "axios";
-import { ServiceErrorCarrier } from "foundation.contracts";
+import { ArrayCarrier, ServiceErrorCarrier } from "foundation.contracts";
 import { ITodoItemReader, TodoItem } from "todos.models";
 
 export default class AxiosTodoItemReader implements ITodoItemReader {
@@ -9,7 +9,8 @@ export default class AxiosTodoItemReader implements ITodoItemReader {
     this.axios = axios;
   }
 
-  getAllItems(): Promise<TodoItem[] | ServiceErrorCarrier> {
-    return Promise.resolve([]);
+  async getAllItems(): Promise<TodoItem[] | ServiceErrorCarrier> {
+    const response = await this.axios.get<ArrayCarrier<TodoItem>>("api/todos");
+    return response.data.items;
   }
 };
