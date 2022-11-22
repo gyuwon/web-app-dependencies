@@ -1,17 +1,4 @@
-import { ServiceErrorCarrier } from "foundation.contracts";
+import TodoItem from "./TodoItem";
+import ITodoItemReader from "./ITodoItemReader";
 
-export class TodoItem {
-  id: string;
-  text: string;
-  isDone: boolean;
-  
-  constructor(id: string, text: string, isDone: boolean) {
-    this.id = id;
-    this.text = text;
-    this.isDone = isDone;
-  }
-}
-
-export interface ITodoItemReader {
-  getAllItems(): Promise<TodoItem[] | ServiceErrorCarrier>
-};
+export { TodoItem, ITodoItemReader };
