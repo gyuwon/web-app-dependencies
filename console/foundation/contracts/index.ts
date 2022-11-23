@@ -1,25 +1,9 @@
-export class ServiceError {
-  code: string;
-  message: string;
+import { ServiceError } from "./ServiceError";
+import { ServiceErrorCarrier } from "./ServiceErrorCarrier";
+import { ArrayCarrier } from "./ArrayCarrier";
 
-  constructor(code: string, message: string) {
-    this.code = code;
-    this.message = message;
-  }
-};
-
-export class ServiceErrorCarrier {
-  error: ServiceError;
-
-  constructor(error: ServiceError) {
-    this.error = error;
-  }
-};
-
-export class ArrayCarrier<T> {
-  items: T[];
-  
-  constructor(items: T[]) {
-    this.items = items;
-  }
+export {
+  ServiceError,
+  ServiceErrorCarrier,
+  ArrayCarrier
 };
